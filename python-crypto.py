@@ -21,14 +21,21 @@ class cryptoVisual:
             self.url += '&allData=true'
 
     def getData(self):
-        page = requests.get(self.url)
-        data = page.json()['Data']
-        dataFrame = pd.DataFrame(data)
-        dataFrame['timestamp'] = [datetime.datetime.fromtimestamp(d) for d in dataFrame.time]
-        return dataFrame
+        print('Attempting to get Data ...')
+        try:
+            page = requests.get(self.url)
+            data = page.json()['Data']
+            dataFrame = pd.DataFrame(data)
+            dataFrame['timestamp'] = [datetime.datetime.fromtimestamp(d) for d in dataFrame.time]
+        except:
+            print('Something went Wrong')
+        else:
+            return dataFrame
 
     def plotGraph(self):
+        print('Request Initiated ...')
         data = self.getData()
+        print('Data Received, Ploting into a graph ...')
         fg = plt.figure(figsize=(20, 10))
         plt.plot(data.timestamp, data.high)
         plt.title(self.symbol + ' To ' + self.comp_sym + ' Time Frequency = ' + self.timeframe, fontsize=24)
@@ -37,8 +44,8 @@ class cryptoVisual:
         plt.show()
 
 
-BTCPKR = cryptoVisual('BTC', 'PKR', all_data=True)
-BTCPKR.plotGraph()
+BTC = cryptoVisual('BTC', 'PKR', all_data=True)
+BTC.plotGraph()
 
 BTC = cryptoVisual('BTC', 'USD', all_data=True, timeframe='histohour')
 BTC.plotGraph()
