@@ -44,8 +44,8 @@ class cryptoVisual:
         plt.show()
 
 
-BTC = cryptoVisual('BTC', 'PKR', all_data=True)
-BTC.plotGraph()
+BTCPKR = cryptoVisual('BTC', 'PKR', all_data=True)
+BTCPKR.plotGraph()
 
 BTC = cryptoVisual('BTC', 'USD', all_data=True, timeframe='histohour')
 BTC.plotGraph()
